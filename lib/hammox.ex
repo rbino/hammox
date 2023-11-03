@@ -58,6 +58,20 @@ defmodule Hammox do
   end
 
   @doc """
+  See [Mox.reject/3](https://hexdocs.pm/mox/Mox.html#reject/3).
+  """
+  def reject(mock, function_name, arity) do
+    Telemetry.span(
+      [:hammox, :reject],
+      %{mock: mock, function_name: function_name, arity: arity},
+      fn ->
+        result = Mox.reject(mock, function_name, arity)
+        {result, %{}}
+      end
+    )
+  end
+
+  @doc """
   See [Mox.stub/3](https://hexdocs.pm/mox/Mox.html#stub/3).
   """
   def stub(mock, function_name, code) do
